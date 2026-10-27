@@ -1,4 +1,5 @@
 "use client";
+import { uuid } from "@/lib/uuid";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, UserPlus } from "lucide-react";
@@ -19,7 +20,7 @@ export function NewOrderForm({ types, staff, canAssign, canPay }: { types: { id:
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const key = useRef(crypto.randomUUID());
+  const key = useRef(uuid());
   // تسجيل عميل سريع
   const [quick, setQuick] = useState(false);
 

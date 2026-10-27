@@ -1,4 +1,5 @@
 "use client";
+import { uuid } from "@/lib/uuid";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/client";
@@ -12,7 +13,7 @@ export function useAction() {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [ok, setOk] = useState<string | null>(null);
-  const key = useRef(crypto.randomUUID());
+  const key = useRef(uuid());
 
   async function run<T>(path: string, method: string, body?: unknown, opts: { success?: string; confirm?: string; onDone?: (r: T) => void; refresh?: boolean } = {}) {
     if (pending) return;
@@ -21,7 +22,7 @@ export function useAction() {
     try {
       const payload = body && typeof body === "object" ? { idempotencyKey: key.current, ...body } : body;
       const r = await api<T>(path, method, payload);
-      key.current = crypto.randomUUID();
+      key.current = uuid();
       setOk(opts.success ?? "تم الحفظ");
       opts.onDone?.(r);
       if (opts.refresh !== false) router.refresh();
