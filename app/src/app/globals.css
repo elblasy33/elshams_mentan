@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-cairo), "Segoe UI", Tahoma, sans-serif;
+  --color-navy-950: #0f1830;
+  --color-navy-900: #172447;
+  --color-navy-800: #1f3060;
+  --color-navy-700: #2c4180;
+  --color-sun-400: #fbbf3c;
+  --color-sun-500: #f5a524;
+  --color-sun-600: #d98a0a;
+  --color-surface: #f6f7fb;
+  --color-line: #e3e6ef;
+  --color-brand: #172447;
+  --color-on-brand: #ffffff;
+  --radius-card: 14px;
+}
+
+html { direction: rtl; }
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --text: #1b2236; --chart-1: #172447; --chart-2: #f5a524; --chart-grid: #e3e6ef;
+  --sb-bg: #ffffff; --sb-text: #334155; --sb-muted: #94a3b8; --sb-hover: #f1f5f9; --sb-border: #e3e6ef;
+  --color-white: #ffffff;
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-surface: #f6f7fb;
+  --color-line: #e3e6ef;
+  --color-navy-900: #172447;
+  --color-navy-800: #1f3060;
+  --color-navy-700: #2c4180;
+  --color-brand: #172447;
+  --color-on-brand: #ffffff;
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-amber-50: #fffbeb;
+  --color-amber-700: #b45309;
+  --color-rose-50: #fff1f2;
+  --color-rose-200: #fecdd3;
+  --color-rose-700: #be123c;
+  --color-red-50: #fef2f2;
+  --color-red-700: #b91c1c;
+  --color-blue-50: #eff6ff;
+  --color-blue-700: #1d4ed8;
+  --color-orange-50: #fff7ed;
+  --color-orange-700: #c2410c;
+  --color-indigo-50: #eef2ff;
+  --color-indigo-700: #4338ca;
+  --color-violet-50: #f5f3ff;
+  --color-violet-700: #6d28d9;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --text: #e6eaf7; --chart-1: #8ea2ff; --chart-2: #f5a524; --chart-grid: #283056;
+  --sb-bg: #0f1830; --sb-text: #cbd5e1; --sb-muted: #8b95b8; --sb-hover: rgba(255,255,255,.08); --sb-border: #283056;
+  --color-white: #161d36;
+  --color-slate-50: #1b2342;
+  --color-slate-100: #222b4d;
+  --color-slate-200: #2b3560;
+  --color-slate-300: #3a4575;
+  --color-slate-400: #8b95b8;
+  --color-slate-500: #a3acc9;
+  --color-slate-600: #b8c0da;
+  --color-slate-700: #d3d9ec;
+  --color-slate-800: #e6eaf7;
+  --color-surface: #0e1428;
+  --color-line: #283056;
+  --color-navy-900: #e6eaf7;
+  --color-navy-800: #c9d3f5;
+  --color-navy-700: #9fb2ff;
+  --color-brand: #f5a524;
+  --color-on-brand: #0f1830;
+  --color-emerald-50: rgba(16,185,129,.16);
+  --color-emerald-100: rgba(16,185,129,.24);
+  --color-emerald-700: #6ee7b7;
+  --color-emerald-800: #a7f3d0;
+  --color-amber-50: rgba(245,158,11,.16);
+  --color-amber-700: #fcd34d;
+  --color-rose-50: rgba(244,63,94,.16);
+  --color-rose-200: rgba(244,63,94,.35);
+  --color-rose-700: #fda4af;
+  --color-red-50: rgba(239,68,68,.16);
+  --color-red-700: #fca5a5;
+  --color-blue-50: rgba(59,130,246,.16);
+  --color-blue-700: #93c5fd;
+  --color-orange-50: rgba(249,115,22,.16);
+  --color-orange-700: #fdba74;
+  --color-indigo-50: rgba(99,102,241,.16);
+  --color-indigo-700: #a5b4fc;
+  --color-violet-50: rgba(139,92,246,.16);
+  --color-violet-700: #c4b5fd;
+}
+body { background: var(--color-surface); color: var(--text); font-family: var(--font-sans); }
+.num { font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; display: inline-block; }
+input, select, textarea { font-family: inherit; color: inherit; }
+.skeleton { opacity: .9; }
+.skeleton { background: linear-gradient(90deg, var(--color-slate-100) 25%, var(--color-slate-50) 50%, var(--color-slate-100) 75%); background-size: 200% 100%; animation: sk 1.2s infinite; border-radius: 8px; }
+@keyframes sk { to { background-position: -200% 0; } }
+
+/* الطباعة */
+.print-sheet { color: #1b2236; width: 210mm; min-height: 297mm; margin: 0 auto; background: #fff; padding: 14mm; }
+.print-thermal { width: 80mm; margin: 0 auto; background: #fff; padding: 4mm; font-size: 12px; }
+@media print {
+  @page { margin: 0; }
+  body { background: #fff; }
+  .no-print { display: none !important; }
+  .print-sheet { box-shadow: none; margin: 0; }
+}
+.recharts-text, .recharts-cartesian-axis-tick-value { fill: var(--color-slate-500); }

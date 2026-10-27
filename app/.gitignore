@@ -1,0 +1,9 @@
+node_modules
+.next
+.env
+src/generated
+uploads
+backups
+test-results
+e2e/*.pdf
+e2e/*.png

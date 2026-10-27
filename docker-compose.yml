@@ -1,0 +1,28 @@
+# نسخة التجربة: docker compose up -d --build   ثم افتح http://localhost:3000
+# تحتوي مستخدمين وبيانات تجريبية بكلمات مرور معروفة — للعرض فقط. للإنتاج استخدم docker-compose.prod.yml
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: elshams
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-elshams_demo}
+      POSTGRES_DB: elshams
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U elshams"]
+      interval: 5s
+      retries: 10
+  app:
+    build: ./app
+    restart: unless-stopped
+    depends_on: { db: { condition: service_healthy } }
+    ports: ["${APP_PORT:-3000}:3000"]
+    environment:
+      DATABASE_URL: postgresql://elshams:${DB_PASSWORD:-elshams_demo}@db:5432/elshams
+      SESSION_SECRET: ${SESSION_SECRET:-demo-only-secret-change-me-0123456789abcdef}
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Admin@12345}
+      SEED_DEMO: "1"
+      SEED_DEMO_DATA: "1"
+volumes: { pgdata: {} }

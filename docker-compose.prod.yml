@@ -1,0 +1,31 @@
+# الإنتاج: docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
+# لا يزرع بيانات تجريبية. أنشئ أول مدير: انظر app/README.md
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: elshams
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?اضبط DB_PASSWORD}
+      POSTGRES_DB: elshams
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U elshams"]
+      interval: 10s
+      retries: 5
+  app:
+    build: ./app
+    restart: unless-stopped
+    depends_on: { db: { condition: service_healthy } }
+    environment:
+      DATABASE_URL: postgresql://elshams:${DB_PASSWORD}@db:5432/elshams
+      SESSION_SECRET: ${SESSION_SECRET:?اضبط SESSION_SECRET}
+      COOKIE_SECURE: "true"
+  proxy:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment: { DOMAIN: "${DOMAIN:?اضبط DOMAIN}" }
+    volumes: ["./Caddyfile:/etc/caddy/Caddyfile:ro", caddy_data:/data]
+    depends_on: [app]
+volumes: { pgdata: {}, caddy_data: {} }
